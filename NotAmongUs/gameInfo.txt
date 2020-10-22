@@ -1,0 +1,10 @@
+Welcome to the ship.
+You have a bunch of friends given by n,
+But now you have n-1.
+
+This can only mean there is an imposter
+among us... Or even imposters...
+
+It's up to you to solve this murder
+before it happens again!
+	(shhhhh)
