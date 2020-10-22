@@ -21,8 +21,44 @@ string Room::getName()
 	}
 }
 
+string Room::roomLayout()
+{
+	switch (*roomType) {
+	case Bedroom:
+		return "---------------------\n"
+			"|         :)         |\n"
+			"|                    |\n"
+			"|                    |\n"
+			"----------------------\n";
+	case LivingRoom:
+		return "---------------------\n"
+			"|         :(         |\n"
+			"|                    |\n"
+			"|                    |\n"
+			"----------------------\n";
+	case MainDeck:
+		return "---------------------\n"
+			"|         :/         |\n"
+			"|                    |\n"
+			"|                    |\n"
+			"----------------------\n";
+	case Kitchen:
+		return "---------------------\n"
+			"|         :0         |\n"
+			"|                    |\n"
+			"|                    |\n"
+			"----------------------\n";
+	default:
+		return "---------------------\n"
+			"|                    |\n"
+			"|                    |\n"
+			"|                    |\n"
+			"----------------------\n";
+	}
+}
+
 void Room::print()
 {
-	cout << "Room Object | " << "Kind: " << getName();
+	cout << "Room Object | " << "Kind: " << getName() << " \n";
 }
 

@@ -140,12 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameSetup.cpp" />
+    <ClCompile Include="GameUiElements.cpp" />
     <ClCompile Include="Into.cpp" />
     <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFiles.h" />
     <ClInclude Include="GameSetup.h" />
+    <ClInclude Include="GameUIElements.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomKind.h" />

@@ -13,6 +13,7 @@ public:
 	Room(roomKind newRoomKind);
 
 	string getName();
+	string roomLayout();
 
 	void print();
 

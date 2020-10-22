@@ -1,14 +1,10 @@
 #include "Intro.h"
-
+#include "GameUIElements.h"
 //Main function
 int main() {
 	displayMenu();
 }
 
-//Clear the screen
-void clearScreen() {
-	system("cls");
-}
 
 //Display info 
 void displayMenu() {
@@ -20,16 +16,6 @@ void displayMenu() {
 	startGame();
 }
 
-//The Title Bar
-void printTitleBar(string Title = "\tSolve The Mystery") {
-	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-	cout << Title + " \n";
-	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
-}
-
-void printSingleBar() {
-	cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-}
 
 //*********		FILE READ		********
 //Print contents of file
