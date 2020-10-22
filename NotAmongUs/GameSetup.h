@@ -6,8 +6,5 @@
 #include <array>
 #include <vector>
 using namespace std;
-#include "Room.h"
-
-vector <Room*> gameRooms;
 
 void startGame();

@@ -1,4 +1,5 @@
 #include "GameSetup.h"
+#include "GameFiles.h"
 
 void startGame() {
 	system("cls");

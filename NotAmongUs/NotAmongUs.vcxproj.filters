@@ -38,5 +38,8 @@
     <ClInclude Include="GameSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameFiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
