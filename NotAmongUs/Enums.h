@@ -12,3 +12,13 @@ enum roomKind {
 	MainDeck,
 	Bedroom
 };
+
+enum characterObjectKind {
+	Glass,
+	Phone,
+	Knife,
+	Pillow,
+	Pills,
+	Bottle,
+	HairBrush
+};

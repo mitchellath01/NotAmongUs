@@ -139,18 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CharacterObject.cpp" />
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="GameUiElements.cpp" />
     <ClCompile Include="Into.cpp" />
     <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="CharacterObject.h" />
     <ClInclude Include="GameFiles.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="GameUIElements.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Room.h" />
-    <ClInclude Include="RoomKind.h" />
+    <ClInclude Include="Enums.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

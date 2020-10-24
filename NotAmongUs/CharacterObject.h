@@ -7,15 +7,8 @@
 using namespace std;
 #include "Enums.h"
 
-class Room {
+class CharacterObject {
 
 public:
-	Room(roomKind newRoomKind);
-
-	string getName();
-	string roomLayout();
-
-	void print();
-
-	roomKind* roomType;
+	static string getObjectName(characterObjectKind objectType);
 };
