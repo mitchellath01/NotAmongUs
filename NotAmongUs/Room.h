@@ -4,8 +4,11 @@
 #include <string>
 #include <ctime>
 #include <array>
+#include <vector>
+#include "Character.h"
 using namespace std;
 #include "Enums.h"
+//#include "RoomFiles.h"
 
 class Room {
 
@@ -15,7 +18,11 @@ public:
 	string getName();
 	string roomLayout();
 
+	vector <Character*> getRoomOccupants();
+
 	void print();
 
 	roomKind* roomType;
+	vector <Character*> roomOccupants;
+
 };

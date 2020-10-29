@@ -155,6 +155,7 @@
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="RoomFiles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

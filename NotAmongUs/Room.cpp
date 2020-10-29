@@ -57,6 +57,11 @@ string Room::roomLayout()
 	}
 }
 
+vector<Character*> Room::getRoomOccupants()
+{
+	return roomOccupants;
+}
+
 void Room::print()
 {
 	cout << "Room Object | " << "Kind: " << getName() << " \n";

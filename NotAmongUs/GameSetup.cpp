@@ -22,6 +22,7 @@ void startGame() {
 		system("pause;");
 	}
 
+	clearScreen();
 	printTitleBar("\tGame loading: Characters");
 	gameCharacters.push_back(new Character("Alex", Glass, true));
 	gameCharacters.push_back(new Character("Adriana", Glass, false));
@@ -40,6 +41,32 @@ void startGame() {
 		printSingleBar();
 		i->print();
 		system("pause;");
+	}
+	printTitleBar("\t Characters Printed");
+	system("pause");
+
+	clearScreen();
+	printTitleBar("\t Game Loading: Characters into rooms");
+	int roomCount = gameRooms.end() - gameRooms.begin() -1;
+	int j = -1;
+	for (Character* i : gameCharacters) {
+		if (j >= roomCount) {
+			j = 0;
+		} else {
+			j = j + 1;
+		}
+   		gameRooms[j]->roomOccupants.push_back(i);
+	}
+
+
+	for (Room* i : gameRooms) {
+		printTitleBar("\tOccupants of " + i->getName());
+		vector <Character*> occupants = i->getRoomOccupants();
+		for (Character* j : occupants) {
+			cout << j->getName();
+			cout << "\n";
+		}
+		system("pause");
 	}
 
 }

@@ -59,5 +59,8 @@
     <ClInclude Include="CharacterObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RoomFiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
