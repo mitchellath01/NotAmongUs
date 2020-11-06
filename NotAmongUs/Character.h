@@ -12,12 +12,17 @@ class Character {
 public:
 	Character(string newName, characterObjectKind newType, bool innocentStatus);
 	string getName();
-	string getAlibi();
+	string getObjectAlibi(); //Explains why they have a certain object
+	string getRegularAlibi();
 	string getObjectName();
 	bool getIsInnocent();
 	void print();
+	void setName(string newName);
+	void setAlibi(string newAlibi);
+	string getAlibi();
 private:
 	characterObjectKind object;
 	bool isInnocent;
+	string alibi;
 	string name;
 };

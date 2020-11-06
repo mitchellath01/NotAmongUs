@@ -5,7 +5,7 @@
 void startGame() {
 	system("cls");
 	printTitleBar("\tGame Starting");
-	//Dirver Code:
+	//Test drive greating rooms
 	printSingleBar();
 	cout << "\tGame loading: Rooms";
 
@@ -22,8 +22,9 @@ void startGame() {
 		system("pause;");
 	}
 
+	//Test drive creating characters
 	clearScreen();
-	printTitleBar("\tGame loading: Characters");
+	printTitleBar("\tGame testing: Characters");
 	gameCharacters.push_back(new Character("Alex", Glass, true));
 	gameCharacters.push_back(new Character("Adriana", Glass, false));
 	gameCharacters.push_back(new Character("Ben", Knife, true));
@@ -42,8 +43,44 @@ void startGame() {
 		i->print();
 		system("pause;");
 	}
+	printTitleBar("\t Character combinations Printed");
+	system("pause");
+
+
+	gameCharacters.clear();
+	system("cls");
+	vector<string> usedAlibiSection;
+	printTitleBar("\tGame Loading: Characters");
+for (int i = 0; i < 4; i++) {
+		if (i == 5) {
+			string nameC = gameCharacters[0]->getName(); //random character between 1 and 4
+			string alibiC = usedAlibiSection[0] + " haha "; //number between 1 and 4
+			gameCharacters.push_back(new Character("ERR3", Glass, false));
+			gameCharacters.back()->setAlibi(nameC + " and i were " + alibiC);
+		}
+		else if (i % 2 == 0) {
+			//need name logic
+   			string nameA = "A";
+			string nameB = "B";
+			//need alibi logic
+			string pairedAlibi = "doing x and y";
+			usedAlibiSection.push_back(pairedAlibi);
+			//make characters with alibi
+			gameCharacters.push_back(new Character("ERR1", Glass, false));
+			gameCharacters.back()->setAlibi(nameA + " and i were " + pairedAlibi);
+			gameCharacters.push_back(new Character("ERR2", Glass, false));
+			gameCharacters.back()->setAlibi(nameB + " and i were " + pairedAlibi);
+		}
+	}
+	system("pause");
+	for (Character* i : gameCharacters) {
+		printSingleBar();
+		cout << i->getName() + " | " + i->getAlibi();
+		system("pause;");
+	}
 	printTitleBar("\t Characters Printed");
 	system("pause");
+
 
 	clearScreen();
 	printTitleBar("\t Game Loading: Characters into rooms");

@@ -17,7 +17,7 @@ string Character::getName()
 	return name;
 }
 
-string Character::getAlibi()
+string Character::getObjectAlibi()
 {
 	switch (object) {
 	case Glass:
@@ -67,7 +67,12 @@ string Character::getAlibi()
 	default:
 		return "i am not sure what to tell you...";
 	}
-};
+}
+string Character::getRegularAlibi()
+{
+	return alibi;
+}
+;
 
 bool Character::getIsInnocent()
 {
@@ -89,6 +94,18 @@ void Character::print()
 	};
 	cout << "Character object | " + getObjectName() + "\n";
 	cout << CharacterObject::getObjectName(object) + "\n";
-	cout << "Character alibi | " + getAlibi() + "\n";
+	cout << "Character alibi | " + getObjectAlibi() + "\n";
+}
+void Character::setName(string newName)
+{
+	name = newName;
+}
+void Character::setAlibi(string newAlibi)
+{
+	alibi = newAlibi;
+}
+string Character::getAlibi()
+{
+	return alibi;
 }
 ;
