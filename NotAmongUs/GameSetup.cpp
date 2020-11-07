@@ -173,7 +173,7 @@ void introView() {
 	system("pause");
 }
 
-void roomView() {
+void roomView(Room: roomInQuestion) {
 
 }
 

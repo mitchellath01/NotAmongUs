@@ -10,7 +10,11 @@ enum roomKind {
 	Kitchen,
 	LivingRoom,
 	MainDeck,
-	Bedroom
+	Bedroom,
+	Hallway,
+	FunRoom,
+	Bathroom,
+	EngineRoom
 };
 
 enum characterObjectKind {
