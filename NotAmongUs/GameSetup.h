@@ -5,6 +5,7 @@
 #include <ctime>
 #include <array>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 void startGame();

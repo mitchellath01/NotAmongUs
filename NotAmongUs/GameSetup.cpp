@@ -9,11 +9,11 @@ void startGame() {
 	//printSingleBar();
 	//cout << "\tGame loading: Rooms";
 
-	//gameRooms.clear();
-	//gameRooms.push_back(new Room(Bedroom));
-	//gameRooms.push_back(new Room(Kitchen));
-	//gameRooms.push_back(new Room(MainDeck));
-	//gameRooms.push_back(new Room(LivingRoom));
+	gameRooms.clear();
+	gameRooms.push_back(new Room(Bedroom));
+	gameRooms.push_back(new Room(Kitchen));
+	gameRooms.push_back(new Room(MainDeck));
+	gameRooms.push_back(new Room(LivingRoom));
 
 	//for (Room* i : gameRooms) {
 	//	printSingleBar();
@@ -81,7 +81,7 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			string nameB = namesToUse[randNameB];
 			namesToUse.erase(namesToUse.begin() + randNameB);
 			//need alibi logic
-			int randAlibi = rand() % sizeof(alibisToUseCount);
+			int randAlibi = rand() % (sizeof(alibisToUseCount) - 1);
 			string pairedAlibi = alibisToUse[randAlibi];
 			usedAlibiSection.push_back(pairedAlibi);
 			alibisToUse.erase(alibisToUse.begin() + randAlibi);
@@ -93,31 +93,38 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			gameCharacters.back()->setAlibi(nameB + " and i were " + pairedAlibi);
 		}
 	}
-	system("pause");
-	for (Character* i : gameCharacters) {
-		printSingleBar();
-		cout << randomNumber + "\n";
-		cout << i->getName() + " | " + i->getAlibi();
-		system("pause;");
-	}
-	printTitleBar("\t Characters Printed");
-	system("pause");
+	//system("pause");
+	//for (Character* i : gameCharacters) {
+	//	printSingleBar();
+	//	cout << randomNumber + "\n";
+	//	cout << i->getName() + " | " + i->getAlibi();
+	//	system("pause;");
+	//}
+	//printTitleBar("\t Characters Printed");
+	//system("pause");
 
 
 	clearScreen();
 	printTitleBar("\t Game Loading: Characters into rooms");
+	//We will randomise the orer of the game characters to ensure 
+	//that it's more difficult for the  user to work out who is the imposter
+	random_shuffle(gameCharacters.begin(), gameCharacters.end());
+	//To get the length of the room cause why not
 	int roomCount = gameRooms.end() - gameRooms.begin() -1;
+	//Set to -1 because otherwise I would have to add more if's and this works :)
 	int j = -1;
+	//For every character put them in a room
 	for (Character* i : gameCharacters) {
 		if (j >= roomCount) {
+			//If we run out of rooms go back to the start
 			j = 0;
 		} else {
 			j = j + 1;
 		}
+		//Add character to room
    		gameRooms[j]->roomOccupants.push_back(i);
 	}
-
-
+	//Print out ocupants
 	for (Room* i : gameRooms) {
 		printTitleBar("\tOccupants of " + i->getName());
 		vector <Character*> occupants = i->getRoomOccupants();
@@ -125,7 +132,8 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			cout << j->getName();
 			cout << "\n";
 		}
-		system("pause");
 	}
+	system("pause");
+	startGame();
 
 }
