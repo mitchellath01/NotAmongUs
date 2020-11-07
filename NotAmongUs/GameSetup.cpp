@@ -169,50 +169,85 @@ void introView() {
 	//Give the dead body a name, have it asociated with the room
 	printTitleBar("\tIt's midnight on the boat\n\tYou are in the kitchen\n\tYou discover someone has been mudered...");
 	printLayout();
-	askForRoom();
-	system("pause");
+	handleInput();
 }
 
 void roomView(Room roomInQuestion) {
 	clearScreen();
 	printTitleBar("\t" + roomInQuestion.getName());
 	cout << roomInQuestion.roomLayout();
-	askForInput("Would you like to do?")
+	askForInput("Would you like to do?");
 }
 
-int askForRoom() {
-	int x = stoi(askForInput("Which room will you investigate?"));
-	cout << sizeof(gameRooms) / sizeof(gameRooms[0]);
-	if (x > sizeof(gameRooms) / sizeof(gameRooms[0]) || x < 0) {
-		cout << x + " uh oh! that was invalid, try again...";
-		return askForRoom();
-	}
-	else {
-		cout << "valid room " + gameRooms[x]->getName();
-		return x;
-	}
-}
+//int askForRoom() {
+//	int x = stoi(askForInput("Which room will you investigate?"));
+//	cout << sizeof(gameRooms) / sizeof(gameRooms[0]);
+//	if (x > sizeof(gameRooms) / sizeof(gameRooms[0]) || x < 0) {
+//		cout << x + " uh oh! that was invalid, try again...";
+//		return askForRoom();
+//	}
+//	else {
+//		cout << "valid room " + gameRooms[x]->getName();
+//		return x;
+//	}
+//}
 
 
 //Ask Screen -> Go to a room -> pick a suspect (2 guesses remaining)
 //Room Selection -> Select room
 //Inside room -> Interrogate x y z, follow up ask them about object -> return to rooms 
 
-//stringstream command(askForString("\nWhat is your next move?\n"));
-//vector<string> commandSplit;
-//while (command.good())
-//{
-//	string word;
-//	getline(command, word, ' ');
-//	word = stringToUpper(word);
-//	commandSplit.push_back(word);
-//}
-//if (commandSplit[0] == "HELP") { readHelpFile(); }
-//else if (commandSplit[0] == "QUIT") { GameOver = true; }
-//else if (commandSplit[0] == "GOTO") { currentRoom = goToRoom(commandSplit[1]); }
-//else if (commandSplit[0] == "QUESTION") { interrogate(commandSplit[1]); }
-//else if (commandSplit[0] == "JOURNAL") { openJournal(); }
-//else if (commandSplit[0] == "SEARCH") { searchForItems(); }
-//else if (commandSplit[0] == "MAP") { openMap(); }
-//else if (commandSplit[0] == "WATCH") { checkWatch(); }
-//else { cout << "\nInvalid Command\n"; system("Pause"); }
+void handleInput() {
+	//Get user input handling
+	stringstream command(askForInput("\nNext Command: \n"));
+	vector<string> commandSplit;
+	while (command.good())
+	{
+		string a;
+		getline(command, a, ' ');
+		transform(a.begin(), a.end(), a.begin(), ::toupper);
+		commandSplit.push_back(a);
+	}
+	//Action the input
+	if (commandSplit[0] == "HELP") {
+		cout << "Help commans go here";
+	} else if (commandSplit[0] == "QUIT") { 
+		cout << "Help commans go here";
+	} else if (commandSplit[0] == "GOTO") {
+		//currentRoom = goToRoom(commandSplit[1]); }
+		int x = stoi(commandSplit[1]);
+		if (x > sizeof(gameRooms) / sizeof(gameRooms[0]) || x < 0) {
+			cout << x + " uh oh! that was invalid, try again...";
+			handleInput();
+		}
+		else {
+			cout << "valid room " + gameRooms[x]->getName();
+			//go to room
+		}
+	} else if (commandSplit[0] == "QUESTION") { 
+		//interrogate(commandSplit[1]); 
+		//if is in room
+		//check if suspect is in room
+		//interrogate them
+		//ask for further questioning
+	} else if (commandSplit[0] == "JOURNAL") { 
+		//Big rip
+		cout << "journal";
+	} else if (commandSplit[0] == "SEARCH") { 
+		//Ask for item name
+		// check each room's occupants and if they have object
+		//Add to vector of rooms
+		//return room possibilities
+		cout << "search";
+	} else if (commandSplit[0] == "MAP") { 
+		//Open layout view 
+		introView();
+	} else if (commandSplit[0] == "WATCH") { 
+		//checkWatch();
+		cout << "the time";
+	} else { 
+		cout << "\nInvalid Command\n"; 
+		system("Pause"); 
+		handleInput();
+	}
+}
