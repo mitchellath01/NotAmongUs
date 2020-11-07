@@ -173,8 +173,11 @@ void introView() {
 	system("pause");
 }
 
-void roomView(Room: roomInQuestion) {
-
+void roomView(Room roomInQuestion) {
+	clearScreen();
+	printTitleBar("\t" + roomInQuestion.getName());
+	cout << roomInQuestion.roomLayout();
+	askForInput("Would you like to do?")
 }
 
 int askForRoom() {
@@ -194,3 +197,22 @@ int askForRoom() {
 //Ask Screen -> Go to a room -> pick a suspect (2 guesses remaining)
 //Room Selection -> Select room
 //Inside room -> Interrogate x y z, follow up ask them about object -> return to rooms 
+
+//stringstream command(askForString("\nWhat is your next move?\n"));
+//vector<string> commandSplit;
+//while (command.good())
+//{
+//	string word;
+//	getline(command, word, ' ');
+//	word = stringToUpper(word);
+//	commandSplit.push_back(word);
+//}
+//if (commandSplit[0] == "HELP") { readHelpFile(); }
+//else if (commandSplit[0] == "QUIT") { GameOver = true; }
+//else if (commandSplit[0] == "GOTO") { currentRoom = goToRoom(commandSplit[1]); }
+//else if (commandSplit[0] == "QUESTION") { interrogate(commandSplit[1]); }
+//else if (commandSplit[0] == "JOURNAL") { openJournal(); }
+//else if (commandSplit[0] == "SEARCH") { searchForItems(); }
+//else if (commandSplit[0] == "MAP") { openMap(); }
+//else if (commandSplit[0] == "WATCH") { checkWatch(); }
+//else { cout << "\nInvalid Command\n"; system("Pause"); }
