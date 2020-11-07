@@ -57,7 +57,7 @@ string Room::roomLayout()
 	}
 }
 
-vector<Character*> Room::getRoomOccupants()
+vector<Suspect*> Room::getRoomOccupants()
 {
 	return roomOccupants;
 }

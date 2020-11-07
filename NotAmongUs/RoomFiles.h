@@ -5,6 +5,6 @@
 #include <vector>
 #include <ctime>
 using namespace std;
-#include "Character.h"
+#include "Suspect.h"
 
 //vector <Character*> roomPatrons;

@@ -1,23 +1,23 @@
-#include "Character.h"
+#include "Suspect.h"
 
-string Character::getObjectName()
+string Suspect::getObjectName()
 {
 	return CharacterObject::getObjectName(object);
 }
 
-Character::Character(string newName, characterObjectKind newType, bool innocentStatus)
+Suspect::Suspect(string newName, characterObjectKind newType, bool innocentStatus)
 {
 	name = newName;
 	object = newType;
 	isInnocent = innocentStatus;
 }
 
-string Character::getName()
+string Suspect::getName()
 {
 	return name;
 }
 
-string Character::getObjectAlibi()
+string Suspect::getObjectAlibi()
 {
 	switch (object) {
 	case Glass:
@@ -68,13 +68,13 @@ string Character::getObjectAlibi()
 		return "i am not sure what to tell you...";
 	}
 }
-string Character::getRegularAlibi()
+string Suspect::getRegularAlibi()
 {
 	return alibi;
 }
 ;
 
-bool Character::getIsInnocent()
+bool Suspect::getIsInnocent()
 {
 	if (isInnocent) {
 		return true;
@@ -83,7 +83,7 @@ bool Character::getIsInnocent()
 		return false;
 	}
 }
-void Character::print()
+void Suspect::print()
 {
 	cout << "Character object | " + getName() + "\n";
 	if (isInnocent) {
@@ -96,15 +96,15 @@ void Character::print()
 	cout << CharacterObject::getObjectName(object) + "\n";
 	cout << "Character alibi | " + getObjectAlibi() + "\n";
 }
-void Character::setName(string newName)
+void Suspect::setName(string newName)
 {
 	name = newName;
 }
-void Character::setAlibi(string newAlibi)
+void Suspect::setAlibi(string newAlibi)
 {
 	alibi = newAlibi;
 }
-string Character::getAlibi()
+string Suspect::getAlibi()
 {
 	return alibi;
 }

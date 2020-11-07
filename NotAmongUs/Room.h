@@ -5,10 +5,10 @@
 #include <ctime>
 #include <array>
 #include <vector>
-#include "Character.h"
+#include "Suspect.h"
 using namespace std;
 #include "Enums.h"
-//#include "RoomFiles.h"
+//#include "RoomFiles.h" //Not sure if ill end up using this
 
 class Room {
 
@@ -18,11 +18,11 @@ public:
 	string getName();
 	string roomLayout();
 
-	vector <Character*> getRoomOccupants();
+	vector <Suspect*> getRoomOccupants();
 
 	void print();
 
 	roomKind* roomType;
-	vector <Character*> roomOccupants;
+	vector <Suspect*> roomOccupants;
 
 };
