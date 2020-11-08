@@ -5,9 +5,9 @@ RoomObject::RoomObject()
 	
 }
 
-RoomObject::RoomObject(characterObjectKind objectKind, bool bloodyObjectStatus)
+RoomObject::RoomObject(characterObjectKind newObjectKind, bool bloodyObjectStatus)
 {
-	objectKind = objectKind;
+	objectKind = newObjectKind;
 	isBloody = bloodyObjectStatus;
 	characterObjectKind getObjectKind();
 }

@@ -14,3 +14,7 @@ void introView();
 void mapView();
 void introView();
 void handleInput();
+void createGameRooms();
+void bulkGameSetup(int innocentPairs);
+void askForDifficulty();
+void logToJournal(string activity, string description);

@@ -10,21 +10,57 @@
 //One room is bloodied
 
 //Murdered person needs a murder method, murder tool, murder location
+int timePenalty = 0;
+characterObjectKind murderWeapon;
 
 //Game setup
 void startGame() {
+	//Clear screen and reset variables here
 	clearScreen();
+	askForDifficulty();
+
 	printTitleBar("\tGame Starting .");
+	
 	furtherQuestioning = 2;
 	int gameTime = 960; //8pm
 	journalLogs.clear();
 
-	//Test drive greating rooms
-	//printSingleBar();
-	//cout << "\tGame loading: Rooms";
 
 	//Making some rooms
 	gameRooms.clear();
+	createGameRooms();
+	bulkGameSetup(3);
+	
+	//Game has been setup
+	clearScreen();
+	printTitleBar("\tGame Variables Loaded :)\n");
+	pause();
+	clearScreen();
+	printTitleBar("\n\tThere is one dead person...\n\tAmoung us\n");
+	pause();
+	introView();
+}
+
+void askForDifficulty() {
+	clearScreen();
+	printTitleBar("\tChoose difficulty: (enter number)\n-Easy\n-Medium\n-Hard\n");
+		stringstream rawUserInput(askForInput("\nNext Command: \n"));
+		vector<string> userInputVec;
+		while (rawUserInput.good())
+		{
+			string a;
+			getline(rawUserInput, a, ' ');
+			transform(a.begin(), a.end(), a.begin(), ::toupper);
+			userInputVec.push_back(a);
+		}
+		//Action the input
+		if (userInputVec[0] == "EASY") { timePenalty = 1; }
+		else if (userInputVec[0] == "MEDIUM") { timePenalty = 2; }
+		else if (userInputVec[0] == "HARD") { timePenalty = 4; } 
+		else { askForDifficulty(); }
+}
+
+void createGameRooms() {
 	gameRooms.push_back(new Room(MainDeck));
 	gameRooms.push_back(new Room(Bedroom));
 	gameRooms.push_back(new Room(LivingRoom));
@@ -32,50 +68,24 @@ void startGame() {
 	gameRooms.push_back(new Room(FunRoom));
 	gameRooms.push_back(new Room(EngineRoom));
 	gameRooms.push_back(new Room(Bathroom));
-	//rooms have been added to game memory
+}
 
-	//******** TEST CODE START ********
-	//for (Room* i : gameRooms) {
-	//	printSingleBar();
-	//	i->print();
-	//	printRoom(*i);
-	//	system("pause;");
-	//}
+//******** TEST CODE CREATE GAME ROOMS ********
+void printGameRooms() {
+	for (Room* i : gameRooms) {
+		printSingleBar();
+		i->print();
+		printRoom(*i);
+		system("pause;");
+	}
+}
 
-	//Test drive creating characters
-	//Lets me see if characters are printing and being created properly, 
-	//focusing on object alibis in this case.
-	//clearScreen();
-	//printTitleBar("\tGame testing: Characters");
-	//gameCharacters.push_back(new Character("Alex", Glass, true));
-	//gameCharacters.push_back(new Character("Adriana", Glass, false));
-	//gameCharacters.push_back(new Character("Ben", Knife, true));
-	//gameCharacters.push_back(new Character("Beth", Knife, false));
-	//gameCharacters.push_back(new Character("Cam", Pillow, true));
-	//gameCharacters.push_back(new Character("Courtney", Pillow, false));
-	//gameCharacters.push_back(new Character("Denis", Pills, true));
-	//gameCharacters.push_back(new Character("Daniella", Pills, false));
-	//gameCharacters.push_back(new Character("Eric", Bottle, true));
-	//gameCharacters.push_back(new Character("Ella", Bottle, false));
-	//gameCharacters.push_back(new Character("Fred", HairBrush, true));
-	//gameCharacters.push_back(new Character("Francesca", HairBrush, false));
-	//system("pause");
-	//for (Character* i : gameCharacters) {
-	//	printSingleBar();
-	//	i->print();
-	//	system("pause;");
-	//}
-	//printTitleBar("\t Character combinations Printed");
-	//system("pause");
-
-	clearScreen();
-	printTitleBar("\tGame Starting ..");
-
+//Majority of the game setup goes here
+void bulkGameSetup(int innocentPairs) {
 	//Creating characters with alibis
-
 	gameCharacters.clear();
 	clearScreen();
-	int amountOfInnocentPairs = 2;
+	int amountOfInnocentPairs = innocentPairs;
 
 	vector<string> usedAlibiSection;
 	vector<string> namesToUse = characterNames;
@@ -91,9 +101,9 @@ void startGame() {
 
 	characterObjectKind imposterObject = characterObjectKind(randObject); //use when adding objects around the map
 	//printTitleBar("\tGame Loading: Characters");
-for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
+	for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 
-		if (i == amountOfInnocentPairs * 2) { 
+		if (i == amountOfInnocentPairs * 2) {
 			//If we're at the final character who isnt in a pair, aka the imposter
 			//Pick a random existing character
 			string nameC = gameCharacters[randomNumber]->getName(); //random character between 1 and 4
@@ -110,7 +120,7 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 		else if (i % 2 == 0) { //Create a new pair
 			//Decide two names
 			int randName = rand() % sizeof(namesToUse) + 1;
-   			string nameA = namesToUse[randName];
+			string nameA = namesToUse[randName];
 			namesToUse.erase(namesToUse.begin() + randName); //remove name so it isnt used twice 
 			int randNameB = rand() % sizeof(namesToUse) + 1;
 			string nameB = namesToUse[randNameB];
@@ -129,7 +139,7 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			gameCharacters.back()->setAlibi(nameB + " and i were " + pairedAlibi);
 		}
 
-
+	}
 		//Make room object class
 //Rooms can contain objects
 //Each room gets object
@@ -139,39 +149,28 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 		int murderBodyRoom = rand() % (sizeof(gameRooms) / sizeof(gameRooms[0]));
 		int count = 0;
 		for (Room* i : gameRooms) {
+			randObject = rand() % characterObjectKindCount;
 			if (murderObjectRoom == count) { //Add a bloody object!
-				i->objectInRoom = RoomObject(imposterObject, true);
-			}
-			else if (murderBodyRoom == count) { //Add a dead body!
-				i->containsDeadBody = true;
+				i->objectInRoom = new RoomObject(imposterObject, true);
+				murderWeapon = imposterObject;
 			}
 			else { //Regular room object
-				i->objectInRoom = RoomObject(characterObjectKind(randObject), true);
+				i->objectInRoom = new RoomObject(characterObjectKind(randObject), false);
+			}
+			if (murderBodyRoom == count) { //Add a dead body!
+				i->containsDeadBody = true;
 			}
 		}
-	}
-	//******** TEST CODE START ********
-	//system("pause");
-	//for (Character* i : gameCharacters) {
-	//	printSingleBar();
-	//	cout << randomNumber + "\n";
-	//	cout << i->getName() + " | " + i->getAlibi();
-	//	system("pause;");
-	//}
-	//printTitleBar("\t Characters Printed");
-	//system("pause");
-
 
 	clearScreen();
 	printTitleBar("\tGame Starting ...");
 
-	//clearScreen();
-	//printTitleBar("\t Game Loading: Characters into rooms");
+
 	//We will randomise the orer of the game characters to ensure 
 	//that it's more difficult for the  user to work out who is the imposter
 	random_shuffle(gameCharacters.begin(), gameCharacters.end());
 	//To get the length of the room cause why not
-	int roomCount = gameRooms.end() - gameRooms.begin() -1;
+	int roomCount = gameRooms.end() - gameRooms.begin() - 1;
 	//Set to -1 because otherwise I would have to add more if's and this works :)
 	int j = -1;
 	//For every character put them in a room
@@ -179,35 +178,22 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 		if (j >= roomCount) {
 			//If we run out of rooms go back to the start
 			j = 0;
-		} else {
+		}
+		else {
 			j = j + 1;
 		}
 		//Add character to room
 		gameRooms[j]->addRoomOccupant(i);
 	}
-	////Print out ocupants
-	//for (Room* i : gameRooms) {
-	//	printTitleBar("\tOccupants of " + i->getName());
-	//	vector <Character*> occupants = i->getRoomOccupants();
-	//	for (Character* j : occupants) {
-	//		cout << j->getName();
-	//		cout << "\n";
-	//	}
-	//}
-	//system("pause");
-	//startGame(); //Infinite loop to let me test this code many times to ensure it doesnt break
-
-	clearScreen();
-	printTitleBar("\tGame Variables Loaded :)");
-	introView();
 }
+
 
 //First screen of gameplay
 void introView() {
 	clearScreen();
 	//Should pick a random room to make the dead body room
 	//Give the dead body a name, have it asociated with the room
-	printTitleBar("\tIt's midnight on the boat\n\tYou are in the kitchen\n\tYou discover someone has been mudered...");
+	printTitleBar("\tIt's midnight on the boat\n\tYou hear a scream,\n\tYou discover someone has been mudered...");
 	printLayout();
 	handleInput();
 }
@@ -230,14 +216,21 @@ void roomView(Room roomInQuestion) {
 
 //Give details on the room
 void searchRoom(Room roomInQuestion) {
-	printTitleBar("\t" + roomInQuestion.getName() + " details:");
+	printSingleBar();
+	cout << "\t" + roomInQuestion.getName() + " details:";
 	cout << "\nRoom Occupants:";
-	for (string i : roomInQuestion.getDisplayRoomOccupantNames()) {
+	for (string i : roomInQuestion.getDisplayRoomOccupantNames(murderWeapon)) {
 		cout << "\n\t" + i;
 	}
-	printSingleBar();
 	cout << "\nObject in Room:\n";
-	cout << CharacterObject::getObjectName(roomInQuestion.objectInRoom.objectKind) + "\n";
+	if (roomInQuestion.objectInRoom->isObjectBloody()) {
+		cout << CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + ", smeared in blood!" + "\n";
+		logToJournal("FOUND - BLOODY", CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + " >" + roomInQuestion.getName());
+	}
+	else {
+		cout << CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + "\n";
+		logToJournal("FOUND", CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + " >" + roomInQuestion.getName());
+	}
 	handleInput();
 }
 
@@ -388,7 +381,7 @@ void handleInput() {
 	//Search a room
 	} else if (userInputVec[0] == "SEARCH") {
 		int roomIndex = roomIndexByName(userInputVec[1]);
-		if (roomIndex > gameRooms.size()) {
+		if (roomIndex > gameRooms.size() -1) {
 			cout << "Invalid Room!";
 		}
 		else {

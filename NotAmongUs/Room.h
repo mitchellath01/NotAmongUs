@@ -26,11 +26,11 @@ public:
 	roomKind* roomType;
 	bool containsDeadBody;
 	vector <Suspect*> getRawRoomOccupants();
-	vector <string> getDisplayRoomOccupantNames();
+	vector <string> getDisplayRoomOccupantNames(characterObjectKind murderWeapon);
 	void addRoomOccupant(Suspect* newSuspect);
 	void setRawRoomOccupants(vector <Suspect*> newOccupants);
-	//characterObjectKind roomObjects
-	RoomObject objectInRoom;
+
+	RoomObject* objectInRoom;
 private:
 	vector <Suspect*> roomOccupants;
 };
