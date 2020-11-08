@@ -54,7 +54,7 @@ void askForDifficulty() {
 		//Action the input
 		if (userInputVec[0] == "EASY") { timePenalty = 1; }
 		else if (userInputVec[0] == "MEDIUM") { timePenalty = 2; }
-		else if (userInputVec[0] == "HARD") { timePenalty = 4; } 
+		else if (userInputVec[0] == "HARD") { timePenalty = 3; } 
 		else { askForDifficulty(); }
 }
 
@@ -203,6 +203,7 @@ void mapView() {
 	clearScreen();
 	printLayout();
 	handleInput();
+	addTime(3);
 }
 
 //Display the room view
@@ -242,16 +243,17 @@ void searchRoom(Room roomInQuestion) {
 
 //increment the time
 void addTime(int taskLevel) {
-	gameTime += taskLevel * 4;
+	gameTime += taskLevel * timePenalty;
 }
 
 //get time in form of string HH:MM
 string timeInString() {
 	float converted = gameTime / 60.0;
+	converted + 13;
 	converted *= 100;
 	int normalised = converted;
 	string toInsert = to_string(normalised);
-	toInsert.insert(2, ":");
+	toInsert.insert(2, ".");
 	return toInsert;
 }
 
@@ -333,7 +335,8 @@ void checkCompletion() {
 	}
 	if (gameTime > 1320) {
 		clearScreen();
-		cout << "you failed, it took too long";
+		cout << "you failed, it took too long\n";
+		exit(3);
 		return;
 	}
 }
@@ -478,6 +481,7 @@ void handleInput() {
 					clearScreen();
 					cout << "you have found the imposter\nCongratulations!\n";
 					pause();
+					exit(3);
 					return;
 				}
 			}
@@ -485,6 +489,7 @@ void handleInput() {
 			addTime(5);
 			cout << "you NOT have found the imposter\nyou have failed\n";
 			pause();
+			exit(3);
 			return;
 		}
 		else {
