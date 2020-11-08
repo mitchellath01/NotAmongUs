@@ -21,6 +21,7 @@ public:
 	void setAlibi(string newAlibi); //Give em an alibi
 	string getAlibi(); //Tell us the alibi
 	characterObjectKind getObject();
+	bool hasBeenInterrogated;
 private:
 	characterObjectKind object; //Object they are holding
 	bool isInnocent; //true if innocent, false if a murderer

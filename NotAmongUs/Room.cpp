@@ -119,20 +119,28 @@ vector<string> Room::getDisplayRoomOccupantNames(characterObjectKind murderWeapo
 		switch (murderWeapon) {
 		case Glass:
 			murderDetail = "killed by a sharp, perhaps glass object";
+			break;
 		case Phone:
 			murderDetail = "dehydrated to death, likely from some form of 'thirst trap' on tiktok"; //2
+			break;
 		case Knife:
 			murderDetail = "stabbed to death, with some culinary skill I suspect";
+			break;
 		case Pillow:
 			murderDetail = "suffocated, no signs of brusing, soft object"; //1
+			break;
 		case Pills:
 			murderDetail = "foaming at the mouth, perhaps its an overdose";
+			break;
 		case Bottle:
 			murderDetail = "blunt force kill to the head, probably a glass object";
+			break;
 		case HairBrush:
 			murderDetail = "there's hair everywhere around the body, not from the deceased";
+			break;
 		default:
 			murderDetail = "unsure how they got killed";
+			break;
 		}
 		res.push_back("Dead Body, " + murderDetail );
 	}

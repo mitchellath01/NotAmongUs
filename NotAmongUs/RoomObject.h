@@ -17,6 +17,5 @@ public:
 	bool isObjectBloody();
 	characterObjectKind objectKind;
 private:
-
 	bool isBloody;
 };

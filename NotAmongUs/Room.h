@@ -31,6 +31,8 @@ public:
 	void setRawRoomOccupants(vector <Suspect*> newOccupants);
 
 	RoomObject* objectInRoom;
+	bool hasBeenVisited = false;
+	bool hasBeenSearched = true;
 private:
 	vector <Suspect*> roomOccupants;
 };

@@ -12,6 +12,7 @@
 //Murdered person needs a murder method, murder tool, murder location
 int timePenalty = 0;
 characterObjectKind murderWeapon;
+bool hasCompletedMainTasks;
 
 //Game setup
 void startGame() {
@@ -22,8 +23,9 @@ void startGame() {
 	printTitleBar("\tGame Starting .");
 	
 	furtherQuestioning = 2;
-	int gameTime = 960; //8pm
+	int gameTime = 1200; //8pm
 	journalLogs.clear();
+	hasCompletedMainTasks = false;
 
 
 	//Making some rooms
@@ -91,8 +93,9 @@ void bulkGameSetup(int innocentPairs) {
 	vector<string> namesToUse = characterNames;
 
 	vector<string> alibisToUse = standardAlibis;
-	int alibisToUseCount = 4;
 
+	//BASED ON GAME PARAMETERS *************************
+	int alibisToUseCount = 10;
 	int characterObjectKindCount = 6;
 
 	srand(unsigned(time(NULL)));
@@ -160,6 +163,7 @@ void bulkGameSetup(int innocentPairs) {
 			if (murderBodyRoom == count) { //Add a dead body!
 				i->containsDeadBody = true;
 			}
+			count += 1;
 		}
 
 	clearScreen();
@@ -226,10 +230,16 @@ void searchRoom(Room roomInQuestion) {
 	if (roomInQuestion.objectInRoom->isObjectBloody()) {
 		cout << CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + ", smeared in blood!" + "\n";
 		logToJournal("FOUND - BLOODY", CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + " >" + roomInQuestion.getName());
+		/*hasFoundMurderWeapon = true;*/
 	}
 	else {
 		cout << CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + "\n";
 		logToJournal("FOUND", CharacterObject::getObjectName(roomInQuestion.objectInRoom->objectKind) + " >" + roomInQuestion.getName());
+		if (roomInQuestion.containsDeadBody) {
+			/*hasFoundMurderWeapon = true;*/
+			logToJournal("CRIME SCENE FOUND", roomInQuestion.getName());
+			cout << "NOTE: the room is bloody...";
+		}
 	}
 	handleInput();
 }
@@ -305,8 +315,41 @@ vector<int> roomIndexesByItem(characterObjectKind objectInQuestion) {
 	return results;
 }
 
+void checkCompletion() {
+	bool hasInterrogatedAll = true;
+	for (Suspect* i : gameCharacters) {
+		if (i->hasBeenInterrogated == false) {
+			hasInterrogatedAll = false;
+		}
+	}
+	bool hasVisitedAll = true;
+	bool hasSearchedAll = true;
+	for (Room* i : gameRooms) {
+		if (i->hasBeenVisited == false) {
+			hasVisitedAll = false;
+		}
+		if (i->hasBeenSearched == false) {
+			hasVisitedAll = false;
+		}
+	}
+	if (hasInterrogatedAll && hasVisitedAll && hasSearchedAll) {
+		hasCompletedMainTasks = true;
+	}
+	if (gameTime > 1320) {
+		clearScreen();
+		cout << "you failed, it took too long";
+		return;
+	}
+}
+
 //Handle user input
 void handleInput() {
+	if (hasCompletedMainTasks) {
+		cout << "you can now use the 'Guess x' function";
+	}
+	else {
+		checkCompletion();
+	}
 	//Get user input handling
 	stringstream rawUserInput(askForInput("\nNext Command: \n"));
 	vector<string> userInputVec;
@@ -321,16 +364,20 @@ void handleInput() {
 	if (userInputVec[0] == "HELP") { //TODO: Print Help File
 		cout << "Help commans go here";
 	//Quit Came
-	} else if (userInputVec[0] == "QUIT") { 
+	} 
+	else if (userInputVec[0] == "QUIT") { 
 		cout << "Quitting";
+		return;
 	//Go to room
-	} else if (userInputVec[0] == "GOTO") {
+	} 
+	else if (userInputVec[0] == "GOTO") {
 		int roomIndex = roomIndexByName(userInputVec[1]);
 		if (roomIndex > gameRooms.size()) {
 			cout << "Invalid Room!";
 		}
 		else {
 			addTime(2);
+			gameRooms[roomIndex]->hasBeenVisited = true;
 			roomView(*gameRooms[roomIndex]);
 		}
 	}
@@ -346,6 +393,11 @@ void handleInput() {
 			cout << gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getAlibi() + "\n";
 			logToJournal("Questioning", gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getAlibi());
 			cout << "Would you like to question them further? \n(Only " + to_string(furtherQuestioning) + " further questioning opportunities left\n Use command QUSETIONFURTER " + gameCharacters[suspectIndex]->getName() + "\n";
+			gameCharacters[suspectIndex]->hasBeenInterrogated = true;
+			if (gameCharacters[suspectIndex]->getIsInnocent() == false) {
+				/*hasQuestionedImposter = true;*/
+
+			}
 		}
 	}
 	//Question someone further
@@ -369,7 +421,9 @@ void handleInput() {
 			cout << "no more further questioning remains\n";
 		}
 	//read the journal
-	} else if (userInputVec[0] == "JOURNAL") { 
+
+	} 
+	else if (userInputVec[0] == "JOURNAL") { 
 		addTime(7);
 		clearScreen();
 		printTitleBar("\tJournal Entries");
@@ -379,23 +433,50 @@ void handleInput() {
 		printSingleBar();
 		pause();
 	//Search a room
-	} else if (userInputVec[0] == "SEARCH") {
+	} 
+	else if (userInputVec[0] == "SEARCH") {
 		int roomIndex = roomIndexByName(userInputVec[1]);
 		if (roomIndex > gameRooms.size() -1) {
 			cout << "Invalid Room!";
 		}
 		else {
 			addTime(2);
+			gameRooms[roomIndex]->hasBeenSearched = true;
 			searchRoom(*gameRooms[roomIndex]);
 		}
 	//Go to map
-	} else if (userInputVec[0] == "MAP") { 
+	} 
+	else if (userInputVec[0] == "MAP") { 
 		mapView();
 	//Get time
-	} else if (userInputVec[0] == "WATCH") { 
+	} 
+	else if (userInputVec[0] == "WATCH") { 
 		cout << "The time is " + timeInString() + "\n";
 		pause();
-	} else { 
+	} 
+	else if (userInputVec[0] == "GUESS") {
+		if (hasCompletedMainTasks) {
+			for (Suspect* i : gameCharacters) {
+				string a = i->getName();
+				transform(a.begin(), a.end(), a.begin(), ::toupper);
+				if (userInputVec[1] == a) {
+					clearScreen();
+					cout << "you have found the imposter";
+					pause();
+					return;
+				}
+			}
+			clearScreen();
+			addTime(5);
+			cout << "you NOT have found the imposter";
+			pause();
+		}
+		else {
+			cout << "You need more info first I think!";
+		}
+
+	}
+	else { 
 		cout << "\nInvalid Command\n"; 
 		pause();
 	}
