@@ -15,6 +15,8 @@ public:
 	RoomObject();
 	RoomObject(characterObjectKind objectKind, bool bloodyObjectStatus);
 	bool isObjectBloody();
+	characterObjectKind objectKind;
 private:
+
 	bool isBloody;
 };

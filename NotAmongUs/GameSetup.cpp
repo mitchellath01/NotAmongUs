@@ -225,10 +225,19 @@ void roomView(Room roomInQuestion) {
 	printTitleBar("\t" + roomInQuestion.getName());
 	cout << roomInQuestion.roomLayout();
 	printSingleBar();
-	cout << "\nRoom Occupants";
+	handleInput();
+}
+
+//Give details on the room
+void searchRoom(Room roomInQuestion) {
+	printTitleBar("\t" + roomInQuestion.getName() + " details:");
+	cout << "\nRoom Occupants:";
 	for (string i : roomInQuestion.getDisplayRoomOccupantNames()) {
 		cout << "\n\t" + i;
 	}
+	printSingleBar();
+	cout << "\nObject in Room:\n";
+	cout << CharacterObject::getObjectName(roomInQuestion.objectInRoom.objectKind) + "\n";
 	handleInput();
 }
 
@@ -326,7 +335,6 @@ void handleInput() {
 		int roomIndex = roomIndexByName(userInputVec[1]);
 		if (roomIndex > gameRooms.size()) {
 			cout << "Invalid Room!";
-			handleInput();
 		}
 		else {
 			addTime(2);
@@ -346,7 +354,6 @@ void handleInput() {
 			logToJournal("Questioning", gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getAlibi());
 			cout << "Would you like to question them further? \n(Only " + to_string(furtherQuestioning) + " further questioning opportunities left\n Use command QUSETIONFURTER " + gameCharacters[suspectIndex]->getName() + "\n";
 		}
-		handleInput();
 	}
 	//Question someone further
 	else if (userInputVec[0] == "QUESTIONFURTHER") {
@@ -368,7 +375,6 @@ void handleInput() {
 		else {
 			cout << "no more further questioning remains\n";
 		}
-		handleInput();
 	//read the journal
 	} else if (userInputVec[0] == "JOURNAL") { 
 		addTime(7);
@@ -379,10 +385,16 @@ void handleInput() {
 		}
 		printSingleBar();
 		pause();
-	//Search a room	******** TO DO ********
-	} else if (userInputVec[0] == "SEARCH") { //TO DO
-		//Returns info on a room
-		cout << "search";
+	//Search a room
+	} else if (userInputVec[0] == "SEARCH") {
+		int roomIndex = roomIndexByName(userInputVec[1]);
+		if (roomIndex > gameRooms.size()) {
+			cout << "Invalid Room!";
+		}
+		else {
+			addTime(2);
+			searchRoom(*gameRooms[roomIndex]);
+		}
 	//Go to map
 	} else if (userInputVec[0] == "MAP") { 
 		mapView();
@@ -390,10 +402,9 @@ void handleInput() {
 	} else if (userInputVec[0] == "WATCH") { 
 		cout << "The time is " + timeInString() + "\n";
 		pause();
-		handleInput();
 	} else { 
 		cout << "\nInvalid Command\n"; 
-		system("Pause"); 
-		handleInput();
+		pause();
 	}
+	handleInput();
 }
