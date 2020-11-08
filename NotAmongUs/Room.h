@@ -8,6 +8,7 @@
 #include "Suspect.h"
 using namespace std;
 #include "Enums.h"
+#include "RoomObject.h"
 //#include "RoomFiles.h" //Not sure if ill end up using this
 
 class Room {
@@ -25,5 +26,5 @@ public:
 	roomKind* roomType;
 	vector <Suspect*> roomOccupants;
 	//characterObjectKind roomObjects
-
+	RoomObject objectInRoom;
 };

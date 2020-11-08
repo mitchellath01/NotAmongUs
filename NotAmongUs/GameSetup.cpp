@@ -89,6 +89,7 @@ void startGame() {
 	int randomNumber = rand() % amountOfInnocentPairs;
 	int randObject = rand() % characterObjectKindCount;
 
+	characterObjectKind imposterObject; //use when adding objects around the map
 	//printTitleBar("\tGame Loading: Characters");
 for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 
@@ -101,7 +102,8 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			//Give them a name
 			int randName = rand() % sizeof(namesToUse) + 1;
 			//Add them into the list of characters
-			gameCharacters.push_back(new Suspect(namesToUse[randName], characterObjectKind(randObject), false));
+			imposterObject = characterObjectKind(randObject);
+			gameCharacters.push_back(new Suspect(namesToUse[randName], imposterObject, false));
 			//give them an alibi
 			gameCharacters.back()->setAlibi(nameC + " and i were " + alibiC);
 		}
@@ -125,6 +127,27 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			gameCharacters.back()->setAlibi(nameA + " and i were " + pairedAlibi);
 			gameCharacters.push_back(new Suspect(nameA, characterObjectKind(randObject), false));
 			gameCharacters.back()->setAlibi(nameB + " and i were " + pairedAlibi);
+		}
+
+
+		//Make room object class
+//Rooms can contain objects
+//Each room gets object
+//One room gets bloodied object at random
+//One room is bloodied
+		int murderObjectRoom = rand() % (sizeof(gameRooms) / sizeof(gameRooms[0]));
+		int murderBodyRoom = rand() % (sizeof(gameRooms) / sizeof(gameRooms[0]));
+		int count = 0;
+		for (Room* i : gameRooms) {
+			if (murderObjectRoom == count) { //Add a bloody object!
+				i->objectInRoom = RoomObject(imposterObject, true);
+			}
+			else if (murderBodyRoom == count) { //Add a dead body!
+				//dead person mechanics
+			}
+			else { //Regular room object
+				i->objectInRoom = RoomObject(characterObjectKind(randObject), true);
+			}
 		}
 	}
 	//******** TEST CODE START ********

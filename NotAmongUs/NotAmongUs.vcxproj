@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MainView.cpp" />
+    <ClCompile Include="RoomObject.cpp" />
     <ClCompile Include="Suspect.cpp" />
     <ClCompile Include="CharacterObject.cpp" />
     <ClCompile Include="GameSetup.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainView.h" />
+    <ClInclude Include="RoomObject.h" />
     <ClInclude Include="Suspect.h" />
     <ClInclude Include="CharacterObject.h" />
     <ClInclude Include="GameFiles.h" />
