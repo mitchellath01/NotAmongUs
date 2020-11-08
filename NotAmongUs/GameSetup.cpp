@@ -7,6 +7,9 @@ void startGame() {
 	clearScreen();
 	printTitleBar("\tGame Starting .");
 	furtherQuestioning = 2;
+	int gameTime = 960; //8pm
+	journalLogs.clear();
+
 	//Test drive greating rooms
 	//printSingleBar();
 	//cout << "\tGame loading: Rooms";
@@ -186,6 +189,19 @@ void roomView(Room roomInQuestion) {
 	handleInput();
 }
 
+void addTime(int taskLevel) {
+	gameTime += taskLevel * 4;
+}
+
+string timeInString() {
+	float converted = gameTime / 60.0;
+	converted *= 100;
+	int normalised = converted;
+	string toInsert = to_string(normalised);
+	toInsert.insert(2, ":");
+	return toInsert;
+}
+
 int roomIndexByName(string roomInQuestion) {
 	int x = 0;
 	for (Room* i : gameRooms) {
@@ -214,6 +230,10 @@ int suspectIndexByName(string suspectInQuestion) {
 		}
 	}
 	return x;
+}
+
+void logToJournal(string activity, string description) {
+	journalLogs.push_back(timeInString() + " | " + activity + " | " + description);
 }
 
 //Returns the room indexes where an item is found in
@@ -264,6 +284,7 @@ void handleInput() {
 			handleInput();
 		}
 		else {
+			addTime(2);
 			roomView(*gameRooms[roomIndex]);
 		}
 	}
@@ -274,8 +295,10 @@ void handleInput() {
 			cout << "Invalid Character Name!\n";
 		}
 		else {
+			addTime(1);
 			cout << "YOU: " + gameCharacters[suspectIndex]->getName() + ", can you explain to me what you were \n\tdoing before this happened?\n";
 			cout << gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getAlibi() + "\n";
+			logToJournal("Questioning", gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getAlibi());
 			cout << "Would you like to question them further? \n(Only " + to_string(furtherQuestioning) + " further questioning opportunities left\n Use command QUSETIONFURTER " + gameCharacters[suspectIndex]->getName() + "\n";
 		}
 		handleInput();
@@ -290,8 +313,10 @@ void handleInput() {
 			}
 			else {
 				furtherQuestioning -= 1;
+				addTime(10);
 				cout << "YOU: " + gameCharacters[suspectIndex]->getName() + ", why are you holding " + gameCharacters[suspectIndex]->getObjectName() + "?\n";
 				cout << gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getObjectAlibi() + "\n";
+				logToJournal("Further Questioning", gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getObjectAlibi());
 				cout << to_string(furtherQuestioning) + " further questionings remain.\n";
 			}
 		}
@@ -299,12 +324,16 @@ void handleInput() {
 			cout << "no more further questioning remains\n";
 		}
 		handleInput();
-	//read the journal! ******** TO DO ********
-	} else if (userInputVec[0] == "JOURNAL") {  //TO DO
-		//Big rip
-		//Get time
-		//vector containing [time: person found, room searched, etc]
-		cout << "journal";
+	//read the journal
+	} else if (userInputVec[0] == "JOURNAL") { 
+		addTime(7);
+		clearScreen();
+		printTitleBar("\tJournal Entries");
+		for (string i : journalLogs) {
+			cout << i + "\n";
+		}
+		printSingleBar();
+		pause();
 	//Search a room	******** TO DO ********
 	} else if (userInputVec[0] == "SEARCH") { //TO DO
 		//Returns info on a room
@@ -312,10 +341,11 @@ void handleInput() {
 	//Go to map
 	} else if (userInputVec[0] == "MAP") { 
 		mapView();
-	//Get time ******** TO DO ********
+	//Get time
 	} else if (userInputVec[0] == "WATCH") { 
-		//Get the time
-		cout << "the time";
+		cout << "The time is " + timeInString() + "\n";
+		pause();
+		handleInput();
 	} else { 
 		cout << "\nInvalid Command\n"; 
 		system("Pause"); 

@@ -44,6 +44,11 @@ void printLayout()
 
 }
 
+void pause()
+{
+	system("pause");
+}
+
 string askForInput(string questionToAsk)
 {
 	string x;

@@ -12,4 +12,5 @@ void printTitleBar(string Title);
 void printSingleBar();
 void printRoom(Room roomInQuestion);
 void printLayout();
+void pause();
 string askForInput(string questionToAsk);
