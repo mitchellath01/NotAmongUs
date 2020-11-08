@@ -6,6 +6,7 @@
 void startGame() {
 	clearScreen();
 	printTitleBar("\tGame Starting .");
+	furtherQuestioning = 2;
 	//Test drive greating rooms
 	//printSingleBar();
 	//cout << "\tGame loading: Rooms";
@@ -172,6 +173,12 @@ void introView() {
 	handleInput();
 }
 
+void mapView() {
+	clearScreen();
+	printLayout();
+	handleInput();
+}
+
 void roomView(Room roomInQuestion) {
 	clearScreen();
 	printTitleBar("\t" + roomInQuestion.getName());
@@ -194,6 +201,40 @@ int roomIndexByName(string roomInQuestion) {
 	return x;
 }
 
+int suspectIndexByName(string suspectInQuestion) {
+	int x = 0;
+	for (Suspect* i : gameCharacters) {
+		string characterName = i->getName();
+		transform(characterName.begin(), characterName.end(), characterName.begin(), ::toupper);
+		if (characterName == suspectInQuestion) {
+			return x;
+		}
+		else {
+			x += 1;
+		}
+	}
+	return x;
+}
+
+//Returns the room indexes where an item is found in
+vector<int> roomIndexesByItem(characterObjectKind objectInQuestion) {
+	vector<int> results;
+	int iterator = 0;
+	for (Room* i : gameRooms) {
+		bool isInRoom = false;
+		for (Suspect* j : i->getRoomOccupants()) {
+			if (j->getObject() == objectInQuestion) {
+				isInRoom = true;
+			}
+		}
+		if (isInRoom) {
+			results.push_back(iterator);
+		}
+		iterator += 1;
+	}
+	return results;
+}
+
 //Ask Screen -> Go to a room -> pick a suspect (2 guesses remaining)
 //Room Selection -> Select room
 //Inside room -> Interrogate x y z, follow up ask them about object -> return to rooms 
@@ -210,38 +251,70 @@ void handleInput() {
 		userInputVec.push_back(a);
 	}
 	//Action the input
-	if (userInputVec[0] == "HELP") {
+	if (userInputVec[0] == "HELP") { //TODO: Print Help File
 		cout << "Help commans go here";
+	//Quit Came
 	} else if (userInputVec[0] == "QUIT") { 
-		cout << "Help commans go here";
+		cout << "Quitting";
+	//Go to room
 	} else if (userInputVec[0] == "GOTO") {
 		int roomIndex = roomIndexByName(userInputVec[1]);
 		if (roomIndex > (sizeof(gameRooms) / sizeof(gameRooms[0]))) {
 			cout << "Invalid Room!";
+			handleInput();
 		}
 		else {
 			roomView(*gameRooms[roomIndex]);
 		}
-	} else if (userInputVec[0] == "QUESTION") { 
-		//interrogate(commandSplit[1]); 
-		//if is in room
-		//check if suspect is in room
-		//interrogate them
-		//ask for further questioning
-	} else if (userInputVec[0] == "JOURNAL") { 
+	}
+	//Question a character
+	else if (userInputVec[0] == "QUESTION") {
+		int suspectIndex = suspectIndexByName(userInputVec[1]);
+		if (suspectIndex > (sizeof(gameCharacters) / sizeof(gameCharacters[0]))) {
+			cout << "Invalid Character Name!\n";
+		}
+		else {
+			cout << "YOU: " + gameCharacters[suspectIndex]->getName() + ", can you explain to me what you were \n\tdoing before this happened?\n";
+			cout << gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getAlibi() + "\n";
+			cout << "Would you like to question them further? \n(Only " + to_string(furtherQuestioning) + " further questioning opportunities left\n Use command QUSETIONFURTER " + gameCharacters[suspectIndex]->getName() + "\n";
+		}
+		handleInput();
+	}
+	//Question someone further
+	else if (userInputVec[0] == "QUESTIONFURTHER") {
+		if (furtherQuestioning > 0) {
+			int suspectIndex = suspectIndexByName(userInputVec[1]);
+			if (suspectIndex > (sizeof(gameCharacters) / sizeof(gameCharacters[0]))) {
+				cout << "Invalid Character Name!\n";
+				handleInput();
+			}
+			else {
+				furtherQuestioning -= 1;
+				cout << "YOU: " + gameCharacters[suspectIndex]->getName() + ", why are you holding " + gameCharacters[suspectIndex]->getObjectName() + "?\n";
+				cout << gameCharacters[suspectIndex]->getName() + ": " + gameCharacters[suspectIndex]->getObjectAlibi() + "\n";
+				cout << to_string(furtherQuestioning) + " further questionings remain.\n";
+			}
+		}
+		else {
+			cout << "no more further questioning remains\n";
+		}
+		handleInput();
+	//read the journal! ******** TO DO ********
+	} else if (userInputVec[0] == "JOURNAL") {  //TO DO
 		//Big rip
+		//Get time
+		//vector containing [time: person found, room searched, etc]
 		cout << "journal";
-	} else if (userInputVec[0] == "SEARCH") { 
-		//Ask for item name
-		// check each room's occupants and if they have object
-		//Add to vector of rooms
-		//return room possibilities
+	//Search a room	******** TO DO ********
+	} else if (userInputVec[0] == "SEARCH") { //TO DO
+		//Returns info on a room
 		cout << "search";
+	//Go to map
 	} else if (userInputVec[0] == "MAP") { 
-		//Open layout view 
-		introView();
+		mapView();
+	//Get time ******** TO DO ********
 	} else if (userInputVec[0] == "WATCH") { 
-		//checkWatch();
+		//Get the time
 		cout << "the time";
 	} else { 
 		cout << "\nInvalid Command\n"; 

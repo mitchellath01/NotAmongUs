@@ -11,5 +11,6 @@ using namespace std;
 
 vector <Room*> gameRooms;
 vector <Suspect*> gameCharacters;
+int furtherQuestioning = 2;
 const vector <string> characterNames = { "Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter" };
 const vector <string> standardAlibis = { "were doing a game of chess", "went on a quick midnight snack together", "were looking at the stars", "did some tiktok dances" };

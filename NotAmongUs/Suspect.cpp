@@ -108,4 +108,8 @@ string Suspect::getAlibi()
 {
 	return alibi;
 }
+characterObjectKind Suspect::getObject()
+{
+	return object;
+}
 ;

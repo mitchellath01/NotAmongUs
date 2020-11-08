@@ -11,5 +11,6 @@ using namespace std;
 void startGame();
 void introView();
 //int askForRoom();
+void mapView();
 void introView();
 void handleInput();
