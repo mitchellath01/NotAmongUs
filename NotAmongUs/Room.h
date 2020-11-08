@@ -24,5 +24,6 @@ public:
 
 	roomKind* roomType;
 	vector <Suspect*> roomOccupants;
+	//characterObjectKind roomObjects
 
 };

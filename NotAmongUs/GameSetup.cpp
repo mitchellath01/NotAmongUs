@@ -3,6 +3,15 @@
 #include "GameUIElements.h"
 
 
+//Make room object class
+//Rooms can contain objects
+//Each room gets object
+//One room gets bloodied object at random
+//One room is bloodied
+
+//Murdered person needs a murder method, murder tool, murder location
+
+//Game setup
 void startGame() {
 	clearScreen();
 	printTitleBar("\tGame Starting .");
@@ -16,10 +25,13 @@ void startGame() {
 
 	//Making some rooms
 	gameRooms.clear();
-	gameRooms.push_back(new Room(Bedroom));
-	gameRooms.push_back(new Room(Kitchen));
 	gameRooms.push_back(new Room(MainDeck));
+	gameRooms.push_back(new Room(Bedroom));
 	gameRooms.push_back(new Room(LivingRoom));
+	gameRooms.push_back(new Room(Kitchen));
+	gameRooms.push_back(new Room(FunRoom));
+	gameRooms.push_back(new Room(EngineRoom));
+	gameRooms.push_back(new Room(Bathroom));
 	//rooms have been added to game memory
 
 	//******** TEST CODE START ********
@@ -167,6 +179,7 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 	introView();
 }
 
+//First screen of gameplay
 void introView() {
 	clearScreen();
 	//Should pick a random room to make the dead body room
@@ -176,23 +189,32 @@ void introView() {
 	handleInput();
 }
 
+//display the map view
 void mapView() {
 	clearScreen();
 	printLayout();
 	handleInput();
 }
 
+//Display the room view
 void roomView(Room roomInQuestion) {
 	clearScreen();
 	printTitleBar("\t" + roomInQuestion.getName());
 	cout << roomInQuestion.roomLayout();
+	printSingleBar();
+	cout << "\nRoom Occupants";
+	for (Suspect* i : roomInQuestion.getRoomOccupants()) {
+		cout << "\n\t" + i->getName();
+	}
 	handleInput();
 }
 
+//increment the time
 void addTime(int taskLevel) {
 	gameTime += taskLevel * 4;
 }
 
+//get time in form of string HH:MM
 string timeInString() {
 	float converted = gameTime / 60.0;
 	converted *= 100;
@@ -202,6 +224,7 @@ string timeInString() {
 	return toInsert;
 }
 
+//get index of room by room name
 int roomIndexByName(string roomInQuestion) {
 	int x = 0;
 	for (Room* i : gameRooms) {
@@ -217,6 +240,7 @@ int roomIndexByName(string roomInQuestion) {
 	return x;
 }
 
+//get index of suspect by their name
 int suspectIndexByName(string suspectInQuestion) {
 	int x = 0;
 	for (Suspect* i : gameCharacters) {
@@ -232,6 +256,7 @@ int suspectIndexByName(string suspectInQuestion) {
 	return x;
 }
 
+//Log item into journal
 void logToJournal(string activity, string description) {
 	journalLogs.push_back(timeInString() + " | " + activity + " | " + description);
 }
@@ -255,10 +280,7 @@ vector<int> roomIndexesByItem(characterObjectKind objectInQuestion) {
 	return results;
 }
 
-//Ask Screen -> Go to a room -> pick a suspect (2 guesses remaining)
-//Room Selection -> Select room
-//Inside room -> Interrogate x y z, follow up ask them about object -> return to rooms 
-
+//Handle user input
 void handleInput() {
 	//Get user input handling
 	stringstream rawUserInput(askForInput("\nNext Command: \n"));

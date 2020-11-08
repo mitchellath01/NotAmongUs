@@ -27,19 +27,19 @@ void printLayout()
 {
 	cout << "\t\t     +------------ +\n"
 		"\t\t     |1           |\n"
-		"\t\t     |            |\n"
-		"\t\t     |    MD      |\n"
+		"\t\t     |   Main     |\n"
+		"\t\t     |   deck     |\n"
 		"\t\t     |            |\n"
 		"\t+------------------  -----------------+\n"
 		"\t|2           |3           |4          |\n"
 		"\t|                                     |\n"
-		"\t|    Bed     |Living room |  Kitchen  |\n"
+		"\t|  Bedroom   |Living room |  Kitchen  |\n"
 		"\t|            |            |           |\n"
 		"\t+-----  -----------  -----------  ----+\n"
 		"\t|5           |6           |7          |\n"
 		"\t|                                     |\n"
-		"\t| Fun Room   |  Engines   | Bathroom  |\n"
-		"\t|            |            |           |\n"
+		"\t| Fun Room   |  Engine    | Bathroom  |\n"
+		"\t|            |   Room     |           |\n"
 		"\t+------------+------------+-----------+\n";
 
 }
