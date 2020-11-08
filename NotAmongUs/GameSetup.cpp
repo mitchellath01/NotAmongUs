@@ -1,13 +1,6 @@
 #include "GameSetup.h"
 #include "GameFiles.h"
-#include "GameUIElements.h"
-
-
-//Make room object class
-//Rooms can contain objects
-//Each room gets object
-//One room gets bloodied object at random
-//One room is bloodied
+#include "GameUIElements.h"//dont judge, these are not in header or it goes funny
 
 //Murdered person needs a murder method, murder tool, murder location
 int timePenalty = 0;
@@ -16,6 +9,9 @@ bool hasCompletedMainTasks;
 
 //Game setup
 void startGame() {
+	clearScreen();
+	readHelp();
+	pause();
 	//Clear screen and reset variables here
 	clearScreen();
 	askForDifficulty();
@@ -342,6 +338,24 @@ void checkCompletion() {
 	}
 }
 
+void readHelp() {
+	// open file for reading
+	ifstream fileToRead("howToPlay.txt");
+
+	if (fileToRead.is_open()) {
+		string line = "";
+		while (!fileToRead.eof()) {
+			getline(fileToRead, line);
+			cout << line << "\n";
+		}
+	}
+	else {
+		cout << "\n File Not Found.\n";
+	}
+	// remember to close the file
+	fileToRead.close();
+}
+
 //Handle user input
 void handleInput() {
 	if (hasCompletedMainTasks) {
@@ -362,7 +376,7 @@ void handleInput() {
 	}
 	//Action the input
 	if (userInputVec[0] == "HELP") { //TODO: Print Help File
-		cout << "Help commans go here";
+		readHelp();
 	//Quit Came
 	} 
 	else if (userInputVec[0] == "QUIT") { 
@@ -470,6 +484,7 @@ void handleInput() {
 			addTime(5);
 			cout << "you NOT have found the imposter";
 			pause();
+			return;
 		}
 		else {
 			cout << "You need more info first I think!";

@@ -1,0 +1,8 @@
+How to play?
+Type a command word such as
+GOTO, QUESTION, MAP, SEARCH, QUIT, JOURNAL, WATCH
+Actions such as GOTO need a place to go to, so use it like this:
+GOTO MAINDECK, room names do not contain spaces!
+Each action you take takes time!
+The time is 8 pm, the game needs you to finish by 10 pm!
+Good luck...
