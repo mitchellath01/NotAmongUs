@@ -362,6 +362,7 @@ void handleInput() {
 		cout << "you can now use the 'Guess x' function";
 	}
 	else {
+		cout << "keep searching around, and asking questions\nYou have to guess before time runs out!";
 		checkCompletion();
 	}
 	//Get user input handling
@@ -398,7 +399,7 @@ void handleInput() {
 	//Question a character
 	else if (userInputVec[0] == "QUESTION") {
 		int suspectIndex = suspectIndexByName(userInputVec[1]);
-		if (suspectIndex > (sizeof(gameCharacters) / sizeof(gameCharacters[0]))) {
+		if (suspectIndex > gameCharacters.size() - 1) {
 			cout << "Invalid Character Name!\n";
 		}
 		else {
@@ -475,19 +476,19 @@ void handleInput() {
 				transform(a.begin(), a.end(), a.begin(), ::toupper);
 				if (userInputVec[1] == a) {
 					clearScreen();
-					cout << "you have found the imposter";
+					cout << "you have found the imposter\nCongratulations!\n";
 					pause();
 					return;
 				}
 			}
 			clearScreen();
 			addTime(5);
-			cout << "you NOT have found the imposter";
+			cout << "you NOT have found the imposter\nyou have failed\n";
 			pause();
 			return;
 		}
 		else {
-			cout << "You need more info first I think!";
+			cout << "You need more info first I think!\nCheck every room\nquestion everyone!\nEnsure you have searched far and near\n";
 		}
 
 	}
@@ -495,5 +496,6 @@ void handleInput() {
 		cout << "\nInvalid Command\n"; 
 		pause();
 	}
+	checkCompletion();
 	handleInput();
 }
