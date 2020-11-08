@@ -89,7 +89,7 @@ void startGame() {
 	int randomNumber = rand() % amountOfInnocentPairs;
 	int randObject = rand() % characterObjectKindCount;
 
-	characterObjectKind imposterObject; //use when adding objects around the map
+	characterObjectKind imposterObject = characterObjectKind(randObject); //use when adding objects around the map
 	//printTitleBar("\tGame Loading: Characters");
 for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 
@@ -143,7 +143,7 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 				i->objectInRoom = RoomObject(imposterObject, true);
 			}
 			else if (murderBodyRoom == count) { //Add a dead body!
-				//dead person mechanics
+				i->containsDeadBody = true;
 			}
 			else { //Regular room object
 				i->objectInRoom = RoomObject(characterObjectKind(randObject), true);
@@ -183,7 +183,7 @@ for (int i = 0; i < (amountOfInnocentPairs * 2) + 1; i++) {
 			j = j + 1;
 		}
 		//Add character to room
-   		gameRooms[j]->roomOccupants.push_back(i);
+		gameRooms[j]->addRoomOccupant(i);
 	}
 	////Print out ocupants
 	//for (Room* i : gameRooms) {
@@ -226,8 +226,8 @@ void roomView(Room roomInQuestion) {
 	cout << roomInQuestion.roomLayout();
 	printSingleBar();
 	cout << "\nRoom Occupants";
-	for (Suspect* i : roomInQuestion.getRoomOccupants()) {
-		cout << "\n\t" + i->getName();
+	for (string i : roomInQuestion.getDisplayRoomOccupantNames()) {
+		cout << "\n\t" + i;
 	}
 	handleInput();
 }
@@ -324,7 +324,7 @@ void handleInput() {
 	//Go to room
 	} else if (userInputVec[0] == "GOTO") {
 		int roomIndex = roomIndexByName(userInputVec[1]);
-		if (roomIndex > (sizeof(gameRooms) / sizeof(gameRooms[0]))) {
+		if (roomIndex > gameRooms.size()) {
 			cout << "Invalid Room!";
 			handleInput();
 		}

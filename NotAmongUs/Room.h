@@ -24,7 +24,13 @@ public:
 	void print();
 
 	roomKind* roomType;
-	vector <Suspect*> roomOccupants;
+	bool containsDeadBody;
+	vector <Suspect*> getRawRoomOccupants();
+	vector <string> getDisplayRoomOccupantNames();
+	void addRoomOccupant(Suspect* newSuspect);
+	void setRawRoomOccupants(vector <Suspect*> newOccupants);
 	//characterObjectKind roomObjects
 	RoomObject objectInRoom;
+private:
+	vector <Suspect*> roomOccupants;
 };

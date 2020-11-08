@@ -1,5 +1,7 @@
 #include "Room.h"
 
+
+
 Room::Room(roomKind newRoomKind)
 {
 	Room::roomType = new roomKind(newRoomKind);
@@ -9,21 +11,21 @@ string Room::getName()
 {
 	switch (*roomType) {
 	case LivingRoom:
-		return "Living Room";
+		return "LivingRoom";
 	case Bedroom:
 		return "Bedroom"; //2
 	case Kitchen:
 		return "Kitchen";
 	case MainDeck:
-		return "Main Deck"; //1
+		return "MainDeck"; //1
 	case Hallway:
 		return "Hallway";
 	case FunRoom:
-		return "Fun Room";
+		return "FunRoom";
 	case Bathroom:
 		return "Bathroom";
 	case EngineRoom:
-		return "Engine Room"; //6
+		return "EngineRoom"; //6
 	default:
 		return "A Room";
 	}
@@ -99,5 +101,32 @@ vector<Suspect*> Room::getRoomOccupants()
 void Room::print()
 {
 	cout << "Room Object | " << "Kind: " << getName() << " \n";
+}
+
+vector<Suspect*> Room::getRawRoomOccupants()
+{
+	return roomOccupants;
+}
+
+vector<string> Room::getDisplayRoomOccupantNames()
+{
+	vector<string> res;
+	for (Suspect* i : getRoomOccupants()) {
+		res.push_back(i->getName());
+	}
+	if (containsDeadBody) {
+		res.push_back("Dead Body X0");
+	}
+	return res;
+}
+
+void Room::addRoomOccupant(Suspect* newSuspect)
+{
+	roomOccupants.push_back(newSuspect);
+}
+
+void Room::setRawRoomOccupants(vector<Suspect*> newOccupants)
+{
+	roomOccupants = newOccupants;
 }
 

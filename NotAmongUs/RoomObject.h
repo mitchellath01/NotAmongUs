@@ -12,6 +12,7 @@ using namespace std;
 
 class RoomObject: public CharacterObject {
 public:
+	RoomObject();
 	RoomObject(characterObjectKind objectKind, bool bloodyObjectStatus);
 	bool isObjectBloody();
 private:
