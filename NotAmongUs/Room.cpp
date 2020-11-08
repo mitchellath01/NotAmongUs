@@ -11,11 +11,11 @@ string Room::getName()
 	case LivingRoom:
 		return "Living Room";
 	case Bedroom:
-		return "Living Room";
+		return "Bedroom"; //2
 	case Kitchen:
 		return "Kitchen";
 	case MainDeck:
-		return "Main Deck";
+		return "Main Deck"; //1
 	case Hallway:
 		return "Hallway";
 	case FunRoom:
@@ -23,7 +23,7 @@ string Room::getName()
 	case Bathroom:
 		return "Bathroom";
 	case EngineRoom:
-		return "Engine Room";
+		return "Engine Room"; //6
 	default:
 		return "A Room";
 	}
@@ -32,6 +32,12 @@ string Room::getName()
 string Room::roomLayout()
 {
 	switch (*roomType) {
+	case MainDeck:
+		return "---------------------\n"
+			"|         :/         |\n"
+			"|                    |\n"
+			"|                    |\n"
+			"--------- 3 ----------\n";
 	case Bedroom:
 		return "---------------------\n"
 			"|         :)         |\n"
@@ -44,12 +50,6 @@ string Room::roomLayout()
 			"2                    4\n"
 			"|                    |\n"
 			"----------------------\n";
-	case MainDeck:
-		return "---------------------\n"
-			"|         :/         |\n"
-			"|                    |\n"
-			"|                    |\n"
-			"--------- 3 ----------\n";
 	case Kitchen:
 		return "---------------------\n"
 			"|         :0         |\n"
@@ -63,13 +63,13 @@ string Room::roomLayout()
 		"|                    |\n"
 		"----------------------\n";
 	case EngineRoom:
-		"--------- 3 ---------\n"
+		return "--------- 3 ---------\n"
 			"|         :0         |\n"
 			"5                    7\n"
 			"|                    |\n"
 			"----------------------\n";
 	case Bathroom:
-		"--------- 4 ---------\n"
+		return "--------- 4 ---------\n"
 			"|         :0         |\n"
 			"6                    |\n"
 			"|                    |\n"

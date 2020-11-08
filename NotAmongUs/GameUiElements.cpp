@@ -28,17 +28,17 @@ void printLayout()
 	cout << "\t\t     +------------ +\n"
 		"\t\t     |1           |\n"
 		"\t\t     |            |\n"
-		"\t\t     |            |\n"
+		"\t\t     |    MD      |\n"
 		"\t\t     |            |\n"
 		"\t+------------------  -----------------+\n"
 		"\t|2           |3           |4          |\n"
 		"\t|                                     |\n"
-		"\t|            |            |           |\n"
+		"\t|    Bed     |Living room |  Kitchen  |\n"
 		"\t|            |            |           |\n"
 		"\t+-----  -----------  -----------  ----+\n"
 		"\t|5           |6           |7          |\n"
 		"\t|                                     |\n"
-		"\t|            |            |           |\n"
+		"\t| Fun Room   |  Engines   | Bathroom  |\n"
 		"\t|            |            |           |\n"
 		"\t+------------+------------+-----------+\n";
 
@@ -49,7 +49,7 @@ string askForInput(string questionToAsk)
 	string x;
 	printSingleBar();
 	cout << ":::> " + questionToAsk + " ";
-	cin >> x;
+	getline(std::cin, x);
 	return x;
 }
 
